@@ -41,8 +41,11 @@ class CampaignMonitorWordPress {
 		register_activation_hook( __FILE__, array($this, 'cmwp_on_activate') );
 		register_deactivation_hook( __FILE__, array($this, 'cmwp_on_deactivate') );
 
-		// add the options page and menu item.
-		add_action( 'admin_menu', array($this, 'cmwp_add_admin_menu') );
+		// add the settings option
+		add_action( 'admin_menu', array($this, 'cmwp_create_settings_menu') );
+
+		// add the menu items
+		add_action( 'admin_menu', array($this, 'cmwp_create_menu_item') );
 
 		// load plugin settings
 		add_action( 'admin_init', array($this, 'cmwp_register_settings') );
@@ -100,7 +103,7 @@ class CampaignMonitorWordPress {
 	 *
 	 * @since    1.0.0
 	 */
-	public function cmwp_add_admin_menu() 
+	public function cmwp_create_settings_menu() 
 	{
 		if (current_user_can( 'manage_options' )) {
 			add_options_page( 
@@ -111,6 +114,24 @@ class CampaignMonitorWordPress {
 				 array($this, 'cmwp_display_admin') 
 			); 
 		}
+	}
+
+	/**
+	 * Register the dashboard menu system.
+	 *
+	 * @since    1.0.0
+	 */
+	public function cmwp_create_menu_item()
+	{
+		add_menu_page( 
+			'Campaign Monitor', 
+			'Campaign Monitor', 
+			'manage_options', 
+			'cmwp-menu',
+			array($this, 'cmwp_display_menu'),
+			'dashicons-email-alt',
+			23 
+		); 
 	}
 
 
@@ -191,6 +212,16 @@ class CampaignMonitorWordPress {
             '<input type="text" id="cmwp_url" name="cmwp_options[cmwp_url]" class="regular-text" placeholder="ex: client-name.createsend.com" value="%s">',
             isset($this->options['cmwp_url']) ? esc_attr( $this->options['cmwp_url'] ) : ''
         );
+    }
+
+	/**
+	 * Render the menu plugin.
+	 *
+	 * @since    1.0.0
+	 */
+    public function cmwp_display_menu()
+    {
+    	include('templates/admin.php');
     }
 
 	/**

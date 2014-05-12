@@ -49,9 +49,4 @@ $plugin = plugin_basename( __FILE__ );
 
 add_filter( 'plugin_action_links_' . $plugin, 'cmwp_plugin_settings_link' );
 
-require_once(plugin_dir_path( __FILE__ ) . 'post-types/campign-monitor-wp-post-type-class.php');
-
-if (is_admin())
-	$cmwp_post_type = new CampaignMonitorWordPressPostType();
-
 /* @end of file */
