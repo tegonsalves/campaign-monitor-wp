@@ -45,7 +45,7 @@ class CampaignMonitorWordPress {
 		add_action( 'admin_menu', array($this, 'cmwp_create_settings_menu') );
 
 		// add the menu items
-		add_action( 'admin_menu', array($this, 'cmwp_create_menu_item') );
+		add_action( 'admin_menu', array($this, 'cmwp_create_menu_items') );
 
 		// load plugin settings
 		add_action( 'admin_init', array($this, 'cmwp_register_settings') );
@@ -121,17 +121,53 @@ class CampaignMonitorWordPress {
 	 *
 	 * @since    1.0.0
 	 */
-	public function cmwp_create_menu_item()
+	public function cmwp_create_menu_items()
 	{
 		add_menu_page( 
 			'Campaign Monitor', 
 			'Campaign Monitor', 
 			'manage_options', 
-			'cmwp-menu',
-			array($this, 'cmwp_display_menu'),
+			'cmwp-overview-menu',
+			array($this, 'cmwp_display_overview'),
 			'dashicons-email-alt',
 			23 
-		); 
+		);
+
+		add_submenu_page( 
+			'cmwp-overview-menu', 
+			'Overview', 
+			'Overview', 
+			'manage_options', 
+			'cmwp-overview-menu',
+			array($this, 'cmwp_display_overview') 
+		);
+
+		add_submenu_page( 
+			'cmwp-overview-menu', 
+			'Create &amp; Send', 
+			'Create/Send', 
+			'manage_options', 
+			'cmwp-create-send-menu',
+			array($this, 'cmwp_display_create_send') 
+		);
+
+		add_submenu_page( 
+			'cmwp-overview-menu', 
+			'Lists &amp; Subscribers', 
+			'Lists/Subscribers', 
+			'manage_options', 
+			'cmwp-lists-subscribers-menu',
+			array($this, 'cmwp_display_lists_subscribers') 
+		);
+
+		add_submenu_page( 
+			'cmwp-overview-menu', 
+			'Reports', 
+			'Reports', 
+			'manage_options', 
+			'cmwp-reports-menu',
+			array($this, 'cmwp_display_reports') 
+		);
 	}
 
 
@@ -140,11 +176,10 @@ class CampaignMonitorWordPress {
 	 *
 	 * @since    1.0.0
 	 */
-
 	public function cmwp_register_settings() 
 	{
 		register_setting( 
-			'option-group', 
+			'cmwp-option-group', 
 			'cmwp_options', 
 			array($this, 'sanitize')
 		);
@@ -215,13 +250,43 @@ class CampaignMonitorWordPress {
     }
 
 	/**
-	 * Render the menu plugin.
+	 * Render the overview/main menu.
 	 *
 	 * @since    1.0.0
 	 */
-    public function cmwp_display_menu()
+    public function cmwp_display_overview()
     {
-    	include('templates/admin.php');
+    	include('templates/overview.php');
+    }
+
+	/**
+	 * Render the create/send sub menu.
+	 *
+	 * @since    1.0.0
+	 */
+    public function cmwp_display_create_send()
+    {
+    	include('templates/create-send.php');
+    }
+
+	/**
+	 * Render the lists/subscribers sub menu.
+	 *
+	 * @since    1.0.0
+	 */
+    public function cmwp_display_lists_subscribers()
+    {
+    	include('templates/list-subscribers.php');
+    }
+
+	/**
+	 * Render the reports sub menu.
+	 *
+	 * @since    1.0.0
+	 */
+    public function cmwp_display_reports()
+    {
+    	include('templates/reports.php');
     }
 
 	/**

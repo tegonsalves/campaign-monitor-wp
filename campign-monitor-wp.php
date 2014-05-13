@@ -34,7 +34,7 @@ if (!class_exists('CS_REST_General'))
 require_once(plugin_dir_path( __FILE__ ) . 'campign-monitor-wp-class.php');
 
 if (is_admin())
-    $cmwp_settings_page = new CampaignMonitorWordPress();
+    $cmwp_instance = new CampaignMonitorWordPress();
 
 // add the settings link to the plugins page
 function cmwp_plugin_settings_link($links)
