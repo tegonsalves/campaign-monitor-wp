@@ -213,7 +213,7 @@ class CampaignMonitorWordPress {
         	array($this, 'cmwp_url_callback'), 
         	'campaign-monitor-settings',
         	'cmwp_setting_id' 
-        );
+        ); 
 	}
 
     /** 
@@ -243,8 +243,10 @@ class CampaignMonitorWordPress {
      */
     public function cmwp_url_callback() 
     {
+    	
+
         printf(
-            '<input type="text" id="cmwp_url" name="cmwp_options[cmwp_url]" class="regular-text" placeholder="ex: client-name.createsend.com" value="%s">',
+            '<input type="text" id="cmwp_url" name="cmwp_options[cmwp_url]" class="regular-text" placeholder="ex: account.createsend.com" value="%s">',
             isset($this->options['cmwp_url']) ? esc_attr( $this->options['cmwp_url'] ) : ''
         );
     }
@@ -320,6 +322,21 @@ class CampaignMonitorWordPress {
 
         if (isset($input['cmwp_url']))
             $new_input['cmwp_url'] = sanitize_text_field( $input['cmwp_url'] );
+
+        if (isset($input['cmwp_username']) and isset($input['cmwp_password']) and isset($input['cmwp_url'])) {
+	    	$wrap = new CS_REST_General(NULL);
+
+			$result = $wrap->get_apikey($input['cmwp_username'], $input['cmwp_password'], $input['cmwp_url']);
+
+
+			if ($result->was_successful()) {
+				$cmwp_api_key = $result->response->ApiKey;
+
+				$new_input['cmwp_api_key'] = $cmwp_api_key;
+			} else {
+				echo 'Failed with code ' . $result->http_status_code . '<br>';
+			}
+	    }
 
         return $new_input;
     }

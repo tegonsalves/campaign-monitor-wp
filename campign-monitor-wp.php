@@ -31,6 +31,9 @@ if (!defined( 'WPINC' )) {
 if (!class_exists('CS_REST_General'))
 	require_once(plugin_dir_path( __FILE__ ) . 'api/csrest_general.php');
 
+if (!class_exists('CS_REST_Campaigns'))
+	require_once(plugin_dir_path( __FILE__ ) . 'api/csrest_campaigns.php');
+
 require_once(plugin_dir_path( __FILE__ ) . 'campign-monitor-wp-class.php');
 
 if (is_admin())

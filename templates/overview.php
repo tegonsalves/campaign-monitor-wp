@@ -42,7 +42,7 @@
                     <section>
                         <h3>Already have a list?</h3>
                         <p>Fantastic! Import your existing list of subscribers with a few clicks.</p>
-                        <a  href="/subscribers/" class="secondary">Import your subscribers</a>
+                        <a  href="?page=cmwp-lists-subscribers-menu" class="secondary">Import your subscribers</a>
                     </section>
                     
                     <section>

@@ -21,21 +21,7 @@
 	<?php
 	$options = get_option( 'cmwp_options' );
 
-	$wrap = new CS_REST_General(NULL);
-
-	$result = $wrap->get_apikey($options['cmwp_username'], $options['cmwp_password'], $options['cmwp_url']);
-
-	if ($result->was_successful()) {
-		$cmwp_api_key = $result->response->ApiKey;
-
-		add_option( 'cmwp_options', array('cmwp_api_key' => $cmwp_api_key) );
-	} else {
-		echo 'Failed with code ' . $result->http_status_code . '<br>';
-	}
-
-	//echo $options['cmwp_api_key'];
-
-	// if the api key isn't set force the user to the settings page
+	// if the options are not set force the user to the settings page
 	if (!$options) {
 	?>
 		<p>You have not completed the setup for Campaign Monitor for WordPress, you will have to do so first. Please go to the 
@@ -48,8 +34,7 @@
 		<div id="new-slate" class="overview">
 
             <h3>Design your first campaign</h3>
-            <p>Get started by creating your first email campaign. We'll walk you through the<br/>
-                entire process, and you can choose how you'd like to pay before you send.</p>
+            <p>Get started by creating your first email campaign. We'll walk you through the entire process, and you can choose how you'd like to pay before you send.</p>
             <a href="/campaign/create/new" class="button primary huge forward">Get started</a>
 
             
